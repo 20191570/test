@@ -1,7 +1,10 @@
 package application;
 
 import java.net.URL;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.ResourceBundle;
+import java.util.Stack;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -9,12 +12,11 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Font;
 
 public class CalController implements Initializable{
 	
-	@FXML private TextArea textArea;
-	@FXML private TextField textField;
+	@FXML TextArea textArea;
+	@FXML TextField textField;
 	@FXML private Button one;
 	@FXML private Button two;
 	@FXML private Button three;
@@ -35,9 +37,13 @@ public class CalController implements Initializable{
 	@FXML private Button dot;
 	@FXML private Button rring;
 	@FXML private Button lring;
-
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		
+		//수식 계산을 위한 stack생성
+//		Stack<String> stack = new Stack<String>();
+//		Queue<String> queue = new LinkedList<>();
 		
 		//textArea와 textField에 작성된 것을 화면에서 수정하지 못하도록
 		textArea.setEditable(false);
@@ -49,7 +55,6 @@ public class CalController implements Initializable{
 		//Font font = new Font(null, 0);
 		//textArea.setFont(font);
 		
-		//textArea.setVisible(true); -> 글씨가 흐리게 나타남
 		
 		//버튼 기능 설정하기
 		zero.setOnAction(e -> textArea.appendText("0"));
@@ -62,15 +67,15 @@ public class CalController implements Initializable{
 		seven.setOnAction(e -> textArea.appendText("7"));
 		eight.setOnAction(e -> textArea.appendText("8"));
 		nine.setOnAction(e -> textArea.appendText("9"));
-		dot.setOnAction(e -> textArea.appendText("."));
+		dot.setOnAction(e -> textArea.appendText(".")); // 나중에 새로운 알고리즘 필요
 		
 		//split 해야함.
-		plus.setOnAction(e -> textArea.appendText("+"));
-		minus.setOnAction(e -> textArea.appendText("-"));
-		mul.setOnAction(e -> textArea.appendText("×"));
-		div.setOnAction(e -> textArea.appendText("/"));
-		lring.setOnAction(e -> textArea.appendText("("));
-		rring.setOnAction(e -> textArea.appendText(")"));
+		plus.setOnAction(e -> textArea.appendText(" + "));
+		minus.setOnAction(e -> textArea.appendText(" - "));
+		mul.setOnAction(e -> textArea.appendText(" × "));
+		div.setOnAction(e -> textArea.appendText(" / "));
+		lring.setOnAction(e -> textArea.appendText("( "));
+		rring.setOnAction(e -> textArea.appendText(" ) "));
 		
 		
 		del.setOnAction(e -> {
@@ -81,9 +86,14 @@ public class CalController implements Initializable{
 		});
 		//'='을 작성하면 계산결과가 출력되도록 해야 하는데...
 		answer.setOnAction(e -> {
-			String str = textArea.getText();
-			textField.setText(str);
-			textArea.setText(""); //숫자 입력하는 곳 초기화	
+			
+			//쓰레드 생성 , 수식을 후위 표기법으로 전환
+			Runnable before = new BeforeCal(textArea, textField);
+			Thread thread = new Thread(before);
+			thread.start();
+			
+			
+			
 		});
 
 		
