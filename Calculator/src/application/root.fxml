@@ -75,13 +75,12 @@
                   <Font size="21.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="95.0" prefWidth="118.0" text="Button" GridPane.rowIndex="4" />
-            <Button fx:id="zero" mnemonicParsing="false" prefHeight="95.0" prefWidth="118.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <Button fx:id="zero" mnemonicParsing="false" prefHeight="95.0" prefWidth="118.0" text="0" GridPane.rowIndex="4">
                <font>
                   <Font size="21.0" />
                </font>
             </Button>
-            <Button fx:id="dot" mnemonicParsing="false" prefHeight="95.0" prefWidth="118.0" text="." GridPane.columnIndex="2" GridPane.rowIndex="4">
+            <Button fx:id="dot" mnemonicParsing="false" prefHeight="95.0" prefWidth="118.0" text="." GridPane.columnIndex="1" GridPane.rowIndex="4">
                <font>
                   <Font size="21.0" />
                </font>
@@ -91,37 +90,42 @@
                   <Font size="21.0" />
                </font>
             </Button>
-            <Button fx:id="save" mnemonicParsing="false" prefHeight="95.0" prefWidth="118.0" text="save" GridPane.columnIndex="1">
+            <Button fx:id="del" mnemonicParsing="false" prefHeight="95.0" prefWidth="118.0" text="del" GridPane.columnIndex="1">
                <font>
                   <Font size="21.0" />
                </font>
             </Button>
-            <Button fx:id="del" mnemonicParsing="false" prefHeight="95.0" prefWidth="118.0" text="del" GridPane.columnIndex="2">
+            <Button fx:id="lring" mnemonicParsing="false" prefHeight="95.0" prefWidth="118.0" text="(" GridPane.columnIndex="2">
                <font>
                   <Font size="21.0" />
                </font>
             </Button>
-            <Button fx:id="mul" mnemonicParsing="false" prefHeight="95.0" prefWidth="118.0" text="×" GridPane.columnIndex="3">
+            <Button fx:id="mul" mnemonicParsing="false" prefHeight="95.0" prefWidth="118.0" text="×" GridPane.columnIndex="3" GridPane.rowIndex="1">
                <font>
                   <Font size="21.0" />
                </font>
             </Button>
-            <Button fx:id="div" mnemonicParsing="false" prefHeight="95.0" prefWidth="118.0" text="÷" GridPane.columnIndex="3" GridPane.rowIndex="1">
+            <Button fx:id="div" mnemonicParsing="false" prefHeight="95.0" prefWidth="118.0" text="÷" GridPane.columnIndex="3" GridPane.rowIndex="2">
                <font>
                   <Font size="21.0" />
                </font>
             </Button>
-            <Button fx:id="minus" mnemonicParsing="false" prefHeight="95.0" prefWidth="118.0" text="-" GridPane.columnIndex="3" GridPane.rowIndex="2">
+            <Button fx:id="minus" mnemonicParsing="false" prefHeight="95.0" prefWidth="118.0" text="-" GridPane.columnIndex="3" GridPane.rowIndex="3">
                <font>
                   <Font size="21.0" />
                </font>
             </Button>
-            <Button fx:id="plus" mnemonicParsing="false" prefHeight="95.0" prefWidth="118.0" text="＋" GridPane.columnIndex="3" GridPane.rowIndex="3">
+            <Button fx:id="plus" mnemonicParsing="false" prefHeight="95.0" prefWidth="118.0" text="＋" GridPane.columnIndex="3" GridPane.rowIndex="4">
                <font>
                   <Font size="21.0" />
                </font>
             </Button>
-            <Button fx:id="answer" mnemonicParsing="false" prefHeight="95.0" prefWidth="118.0" text="=" GridPane.columnIndex="3" GridPane.rowIndex="4">
+            <Button fx:id="answer" mnemonicParsing="false" prefHeight="95.0" prefWidth="118.0" text="=" GridPane.columnIndex="2" GridPane.rowIndex="4">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Button>
+            <Button fx:id="rring" mnemonicParsing="false" prefHeight="88.0" prefWidth="106.0" text=")" GridPane.columnIndex="3">
                <font>
                   <Font size="21.0" />
                </font>
