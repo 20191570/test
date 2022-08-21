@@ -36,53 +36,85 @@ public class BeforeCal implements Runnable{
 		
 		//queue에 후위 표기법으로 입력하기
 		for(String ch : str_arr) {
-			System.out.println("ch : " + ch);
+			//System.out.println("ch : " + ch);
 			if(ch.equals("(")) {
 				stack.push(ch); //)가 나오기 전까지는 계속 push해야 하므로
-				System.out.println("stack에 " + ch + " push");
+				//System.out.println("stack에 " + ch + " push");
 				stack_first = 0;
 			}
 			else if(ch.equals("×") || ch.equals("/")) {
-				stack.push(ch);
-				System.out.println("stack에 " + ch + " push");
-				stack_first = 2;
+				if(stack_first <= 1) {
+					stack.push(ch);
+					//System.out.println("stack에 " + ch + " push");
+					stack_first = 2;
+				}
+				else { //지금 stack의 최신 노드가 *또는 /이거 라는 의미
+					String pop = "";
+					while(true) {//stack에 일단연산자가 있을거임.
+						if(stack.peek().equals("×") || stack.peek().equals("/") ) {
+							pop = stack.pop();
+							//System.out.println("stack에서 " + pop + "을 pop");
+							queue.add(pop);
+							
+						}
+						else { //stack의 peek이 "(,+,-"일 경우
+							stack.push(ch);
+							//System.out.println("stack에 " + ch + " push");
+							stack_first = 2;
+							break;
+						}
+						
+						if(stack.empty()) {//stack이 없을 경우
+							stack.push(ch);
+							//System.out.println("stack에 " + ch + " push");
+							stack_first = 2;
+							break;
+						}
+						
+					}
+
+				}
 				
 			}
 			else if(ch.equals("+") || ch.equals("-")) {
-				if(stack_first <= 1) {
+				if(stack_first == 0) { //stack의 처음 들어갈 연산자일때 or 스택의 최신 노드가 "("일때
 					stack.push(ch);
-					System.out.println("stack에 " + ch + " push");
+					//System.out.println("stack에 " + ch + " push");
 					stack_first = 1;
 				}
-				else { //현재 stack최신에 *나 /가 있다는 뜻이므로
+				else { 
 					String pop = "";
-					while(!stack.empty()) {//stack이 비어있지 않다면
-						if(stack.peek().equals("+") || stack.peek().equals("-") || stack.peek().equals("(") ) {
+					while(true) {//stack에 일단연산자가 있을거임.
+						if(stack.peek().equals("+") || stack.peek().equals("-") || stack.peek().equals("×") || stack.peek().equals("/") ) {
+							pop = stack.pop();
+							//System.out.println("stack에서 " + pop + "을 pop");
+							queue.add(pop);
+							
+						}
+						else { //stack의 peek이 "("일 경우
 							stack.push(ch);
+							//System.out.println("stack에 " + ch + " push");
 							stack_first = 1;
-							System.out.println("stack에 " + ch + " push");
 							break;
 						}
-						else {
-							pop = stack.pop();
-							System.out.println("stack에서 " + pop + "을 pop");
-							queue.add(pop);
+						
+						if(stack.empty()) {//stack이 없을 경우
+							stack.push(ch);
+							//System.out.println("stack에 " + ch + " push");
+							stack_first = 1;
+							break;
 						}
-	
+						
 					}
 
 				}
 			}
 			else if(ch.equals(")")){
 				String pop = "";
-				System.out.println("여기냐1");
 				while(true) {//(가 pop되지 않는 다면 stack이 비어있을 경우가 없다. 
 					pop = stack.pop();
-					System.out.println("여기냐2");
-					System.out.println("stack에서 " + pop + "을 pop");
-					System.out.println("여기냐3");
+					//System.out.println("stack에서 " + pop + "을 pop");
 					queue.add(pop);
-					System.out.println("여기냐4");
 					if(stack.peek().equals("(")) {
 						stack.pop();
 						break;
@@ -92,21 +124,66 @@ public class BeforeCal implements Runnable{
 			}
 			else { //ch가 숫자일때
 				queue.add(ch);
-				//System.out.println("queue에 "+ch +"저장");
 			}
 		}
 		//stack에 남은 연산자 전부 queue로 보내기
 		String pop = "";
 		while(!stack.empty()) {//stack이 비어있지 않다면
 			pop = stack.pop();
-			System.out.println("stack에서 " + pop + "을 pop");
+			//System.out.println("stack에서 " + pop + "을 pop");
 			queue.add(pop);
 		}
-		System.out.println("--------------------------------");
+		
+		//여기까지 stack은 비어있고 queue에 후위 표기법으로 수식이 정되 완료
+		// 후위 표기법 계산하기 
 		
 		for(String p : queue) {
 			System.out.println(p);
+			if(p.equals("×") || p.equals("+")) {//stack에서 pop순서 상관 없는 경우
+				String str_a = stack.pop();
+				String str_b = stack.pop();
+				double a = Double.parseDouble(str_a);
+				double b = Double.parseDouble(str_b);
+				double c = 0;
+				if(p.equals("×")) {
+					c = a * b;
+					stack.push(c+"");
+				}
+				else {
+					c = a + b;
+					stack.push(c+"");
+				}	
+			}
+			else if(p.equals("/") || p.equals("-")) {
+				String str_a = stack.pop();
+				String str_b = stack.pop();
+				double a = Double.parseDouble(str_a);
+				double b = Double.parseDouble(str_b);
+				double c = 0;
+				if(p.equals("/")) {
+					
+					c = b / a;
+					stack.push(c+"");
+				}
+				else {
+					c = b - a;
+					stack.push(c+"");
+				}	
+				
+			}
+			else {//숫자는 그냥 stack에 push
+				stack.push(p);
+				//System.out.println("stack에 " + p + "가 push");
+			}		
 		}
+		
+		String ans = stack.pop();
+		textField.setText(ans);
+		
+		
+		System.out.println("--------------------------------");
+		
+		// 음수구현 X
 		
 		
 		System.out.println("스레드가 종료되었습니다.");

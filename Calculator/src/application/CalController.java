@@ -46,7 +46,7 @@ public class CalController implements Initializable{
 //		Queue<String> queue = new LinkedList<>();
 		
 		//textArea와 textField에 작성된 것을 화면에서 수정하지 못하도록
-		textArea.setEditable(false);
+		//textArea.setEditable(false);
 		textField.setEditable(false);
 		
 		//답 나오는 부분 오른쪽 정렬
@@ -75,14 +75,15 @@ public class CalController implements Initializable{
 		mul.setOnAction(e -> textArea.appendText(" × "));
 		div.setOnAction(e -> textArea.appendText(" / "));
 		lring.setOnAction(e -> textArea.appendText("( "));
-		rring.setOnAction(e -> textArea.appendText(" ) "));
+		rring.setOnAction(e -> textArea.appendText(" )"));
 		
 		
 		del.setOnAction(e -> {
 			
 		});
 		clear.setOnAction(e -> {
-			
+			textArea.setText("");
+			textField.setText("");
 		});
 		//'='을 작성하면 계산결과가 출력되도록 해야 하는데...
 		answer.setOnAction(e -> {
